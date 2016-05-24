@@ -6,6 +6,7 @@
         Support,
         Customer,
         SilverCustomer,
-        GoldCustomer
+        GoldCustomer,
+        PlatinumCustomer
     }
 }
