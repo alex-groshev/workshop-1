@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using Dao;
-using Domain;
+﻿using Dao;
 
 namespace Services
 {
@@ -30,31 +27,19 @@ namespace Services
         /// <param name="id">User Id.</param>
         public bool Activate(int id)
         {
-            bool result;
-            var user = _userRepository.FindById(id);
+            var factory = new CustomerFactory(_userRepository, _paymentRepository);
+            var customer = factory.Create(id);
 
-            if (user == null)
+            if (customer == null)
             {
-                result = false; // not found
-            }
-            else if (user.UserType == UserType.Admin || user.UserType == UserType.Support)
-            {
-                result = false; // cannot (de-)activate admin/support
-            }
-            else if (user.UserType == UserType.Customer ||
-                user.UserType == UserType.SilverCustomer ||
-                user.UserType == UserType.GoldCustomer)
-            {
-                user.UserStatus = UserStatus.Active;
-                _userRepository.Modify(user);
-                result = true;
-            }
-            else
-            {
-                throw new ArgumentException("Undefined user type");
+                return false;
             }
 
-            return result;
+            customer.Activate();
+
+            _userRepository.Modify(customer.ToUser());
+
+            return true;
         }
 
         /// <summary>
@@ -64,69 +49,19 @@ namespace Services
         /// <param name="id">User Id.</param>
         public bool Deactivate(int id)
         {
-            bool result;
-            var user = _userRepository.FindById(id);
+            var factory = new CustomerFactory(_userRepository, _paymentRepository);
+            var customer = factory.Create(id);
 
-            if (user == null)
+            if (customer == null)
             {
-                result = false; // not found
-            }
-            else if (user.UserType == UserType.Admin || user.UserType == UserType.Support)
-            {
-                result = false; // cannot (de-)activate admin/support
-            }
-            else if (user.UserType == UserType.Customer)
-            {
-                var payments = _paymentRepository.GetUserPayments(user.Id);
-
-                if (payments == null)
-                {
-                    result = true; // no payments - deactivate
-                }
-                else if (payments.Any(x => x.PaymentStatus == PaymentStatus.Pending))
-                {
-                    result = false; // cannot deactivate customer with pending payments
-                }
-                else
-                {
-                    user.UserStatus = UserStatus.Disabled;
-                    _userRepository.Modify(user);
-                    result = true;
-                }
-            }
-            else if (user.UserType == UserType.SilverCustomer)
-            {
-                var payments = _paymentRepository.GetUserPayments(user.Id);
-
-                if (payments == null)
-                {
-                    result = true; // no payments - deactivate
-                }
-                else if (payments.Any(x => x.PaymentStatus == PaymentStatus.Pending) ||
-                    payments.Any(x => x.Date == DateTime.Today))
-                {
-                    // cannot deactivate silver customer with pending payments OR
-                    // who's made a payment today.
-                    result = false;
-                }
-                else
-                {
-                    user.UserStatus = UserStatus.Disabled;
-                    _userRepository.Modify(user);
-                    result = true;
-                }
-            }
-            else if (user.UserType == UserType.GoldCustomer)
-            {
-                // cannot be done online, only relationship manager can deactivate gold customer
-                result = false;
-            }
-            else
-            {
-                throw new ArgumentException("Undefined user type");
+                return false;
             }
 
-            return result;
+            customer.Deactivate();
+
+            _userRepository.Modify(customer.ToUser());
+
+            return true;
         }
     }
 }
