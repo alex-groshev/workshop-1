@@ -15,5 +15,16 @@
         {
             // do nothing for the time being
         }
+
+        public object TryGet(int id)
+        {
+            // do nothing for the time being
+            return null;
+        }
+
+        public void Delete(int id)
+        {
+            // do nothing for the time being
+        }
     }
 }

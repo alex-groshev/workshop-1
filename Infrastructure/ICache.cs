@@ -8,5 +8,9 @@
         void Clean();
 
         void Update(object o);
+
+        object TryGet(int id);
+
+        void Delete(int id);
     }
 }
