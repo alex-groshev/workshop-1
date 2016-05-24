@@ -48,6 +48,9 @@
     <Compile Include="BaseUser.cs" />
     <Compile Include="TechnicalUser.cs" />
     <Compile Include="BaseCustomer.cs" />
+    <Compile Include="Customer.cs" />
+    <Compile Include="SilverCustomer.cs" />
+    <Compile Include="GoldCustomer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
