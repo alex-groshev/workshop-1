@@ -2,7 +2,6 @@
 using System.Linq;
 using Dao;
 using Domain;
-using Infrastructure;
 
 namespace Services
 {
@@ -10,21 +9,18 @@ namespace Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IPaymentRepository _paymentRepository;
-        private readonly ICache _cache;
 
         public CustomerActivationService()
-            : this(new UserRepository(), new PaymentRepository(), new Cache())
+            : this(new UserRepository(), new PaymentRepository())
         {
         }
 
         public CustomerActivationService(
             IUserRepository userRepository,
-            IPaymentRepository paymentRepository,
-            ICache cache)
+            IPaymentRepository paymentRepository)
         {
             _userRepository = userRepository;
             _paymentRepository = paymentRepository;
-            _cache = cache;
         }
 
         /// <summary>
@@ -56,11 +52,6 @@ namespace Services
             else
             {
                 throw new ArgumentException("Undefined user type");
-            }
-
-            if (result)
-            {
-                _cache.Update(user);
             }
 
             return result;
@@ -133,11 +124,6 @@ namespace Services
             else
             {
                 throw new ArgumentException("Undefined user type");
-            }
-
-            if (result)
-            {
-                _cache.Update(user);
             }
 
             return result;
