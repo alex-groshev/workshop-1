@@ -30,10 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -60,29 +56,33 @@
       <HintPath>..\packages\NUnitTestAdapter.WithFramework.2.0.0\lib\NUnit.VisualStudio.TestAdapter.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920">
+      <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UserServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CustomerTests.cs" />
+    <Compile Include="SilverCustomerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Business\Services.csproj">
-      <Project>{6100f131-10aa-4e71-a361-8f139d920ab7}</Project>
+      <Project>{6100F131-10AA-4E71-A361-8F139D920AB7}</Project>
       <Name>Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\Dao\Dao.csproj">
-      <Project>{cebafde2-baa8-4da1-85f5-be77f2951600}</Project>
+      <Project>{CEBAFDE2-BAA8-4DA1-85F5-BE77F2951600}</Project>
       <Name>Dao</Name>
     </ProjectReference>
     <ProjectReference Include="..\Domain\Domain.csproj">
-      <Project>{84fc69d8-2ade-4201-b10e-070deb3012c9}</Project>
+      <Project>{84FC69D8-2ADE-4201-B10E-070DEB3012C9}</Project>
       <Name>Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
-      <Project>{89b78324-65f7-46a3-9e66-5593730b5698}</Project>
+      <Project>{89B78324-65F7-46A3-9E66-5593730B5698}</Project>
       <Name>Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
