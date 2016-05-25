@@ -35,11 +35,13 @@ namespace Services
                 return false;
             }
 
-            customer.Activate();
+            if (customer.Activate())
+            {
+                _userRepository.Modify(customer.ToUser());
+                return true;
+            }
 
-            _userRepository.Modify(customer.ToUser());
-
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -57,11 +59,13 @@ namespace Services
                 return false;
             }
 
-            customer.Deactivate();
+            if (customer.Deactivate())
+            {
+                _userRepository.Modify(customer.ToUser());
+                return true;
+            }
 
-            _userRepository.Modify(customer.ToUser());
-
-            return true;
+            return false;
         }
     }
 }

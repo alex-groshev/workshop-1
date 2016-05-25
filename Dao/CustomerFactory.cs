@@ -43,6 +43,7 @@ namespace Dao
                 case UserType.PlatinumCustomer:
                     result = new PlatinumCustomer(user.Id, user.Name, user.UserStatus,
                         _paymentRepository.GetUserPayments(user.Id));
+                    break;
                 default:
                     //case UserType.Admin:
                     //case UserType.Support:
